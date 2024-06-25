@@ -19,7 +19,7 @@ function Index() {
 	return (
 		<div className="p-2">
 			<h3>Welcome Home!</h3>
-			<Link to="/about">About</Link>
+			<Link to="/dashboard">About</Link>
 			<p>{isPending ? "Loading..." : data}</p>
 		</div>
 	);
