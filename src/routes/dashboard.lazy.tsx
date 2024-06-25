@@ -1,4 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
+import MainLayout from "../layout/main-layout";
 
 export const Route = createLazyFileRoute("/dashboard")({
 	component: Dashboard,
@@ -6,8 +7,8 @@ export const Route = createLazyFileRoute("/dashboard")({
 
 function Dashboard() {
 	return (
-		<div className="p-2">
+		<MainLayout>
 			<h3>Dashboard</h3>
-		</div>
+		</MainLayout>
 	);
 }
