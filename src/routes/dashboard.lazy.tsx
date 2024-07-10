@@ -1,5 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import MainLayout from "../layout/main-layout";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/dashboard")({
 	component: Dashboard,
@@ -13,9 +14,9 @@ function Dashboard() {
 					<h3 className="text-4xl font-bold">
 						Trackr List
 					</h3>
-					<button className="border border-black px-4 py-2 font-medium">
+					<Link className="border border-black px-4 py-2 font-medium" to="/createtrackr">
 						New Trackr
-					</button>
+					</Link>
 				</div>
 				<div className="space-y-4">
 					<div className="border border-black p-4 flex justify-between items-center">
