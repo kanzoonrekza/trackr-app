@@ -7,21 +7,19 @@ export const Route = createLazyFileRoute("/")({
 });
 
 function Index() {
-	const { isPending, data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: ["todos"],
-		queryFn: () =>
-			new Promise<string>((resolve) => {
-				setTimeout(() => {
-					resolve("Mock fetching data");
-				}, 1000);
-			}),
+		queryFn: async () => {
+			const response = await fetch(`${import.meta.env.VITE_BASE_URL}/hello`);
+			return response.json();
+		},
 	});
 
 	return (
 		<MainLayout>
 			<h3>Welcome Home!</h3>
 			<Link to="/dashboard">Dashboard</Link>
-			<p>{isPending ? "Loading..." : data}</p>
+			<p>{isLoading ? "Loading..." : data.message}</p>
 		</MainLayout>
 	);
 }
