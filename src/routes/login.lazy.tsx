@@ -1,5 +1,4 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import MainLayout from "../layout/main-layout";
 import { FormEvent } from "react";
 
 export const Route = createLazyFileRoute("/login")({
@@ -13,7 +12,6 @@ export default function Login() {
   };
 
   return (
-    <MainLayout>
       <div className="bg-white max-w-md mx-auto p-6 mt-10">
         <h2 className="text-center text-3xl font-semibold">Log In</h2>
         <p className="text-center mt-6">
@@ -39,6 +37,5 @@ export default function Login() {
           </button>
         </form>
       </div>
-    </MainLayout>
   );
 }
