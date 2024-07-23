@@ -1,3 +1,4 @@
+
 export default function Form() {
 	return (
 		<div className="bg-white max-w-md mx-auto p-6 mt-10">

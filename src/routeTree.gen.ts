@@ -16,11 +16,23 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const SignupLazyImport = createFileRoute('/signup')()
+const LoginLazyImport = createFileRoute('/login')()
 const DashboardLazyImport = createFileRoute('/dashboard')()
 const CreatetrackrLazyImport = createFileRoute('/createtrackr')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const SignupLazyRoute = SignupLazyImport.update({
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
+
+const LoginLazyRoute = LoginLazyImport.update({
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/login.lazy').then((d) => d.Route))
 
 const DashboardLazyRoute = DashboardLazyImport.update({
   path: '/dashboard',
@@ -62,6 +74,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLazyImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -71,6 +97,8 @@ export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
   CreatetrackrLazyRoute,
   DashboardLazyRoute,
+  LoginLazyRoute,
+  SignupLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -83,7 +111,9 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/createtrackr",
-        "/dashboard"
+        "/dashboard",
+        "/login",
+        "/signup"
       ]
     },
     "/": {
@@ -94,6 +124,12 @@ export const routeTree = rootRoute.addChildren({
     },
     "/dashboard": {
       "filePath": "dashboard.lazy.tsx"
+    },
+    "/login": {
+      "filePath": "login.lazy.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.lazy.tsx"
     }
   }
 }
