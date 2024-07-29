@@ -3,7 +3,7 @@ import { FormEvent } from "react";
 import SignupLayout from "../layout/signup-layout";
 
 export const Route = createLazyFileRoute("/signup")({
-    component: Signup,
+  component: Signup,
 });
 
 export default function Signup() {
