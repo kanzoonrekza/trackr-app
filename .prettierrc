@@ -8,5 +8,8 @@
   "jsxSingleQuote": false,
   "singleQuote": false,
   "arrowParens": "avoid",
-  "printWidth": 80
+  "printWidth": 80,
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ]
 }
