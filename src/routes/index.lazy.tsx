@@ -10,7 +10,7 @@ function Index() {
   const { data, isLoading } = useQuery({
     queryKey: ["todos"],
     queryFn: async () => {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/hello`);
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/status`);
       return response.json();
     },
   });
@@ -19,7 +19,7 @@ function Index() {
     <MainLayout>
       <h3>Welcome Home!</h3>
       <Link to="/dashboard">Dashboard</Link>
-      <p>{isLoading ? "Loading..." : data.message}</p>
+      <p>{isLoading ? "Loading..." : data.status}</p>
     </MainLayout>
   );
 }
