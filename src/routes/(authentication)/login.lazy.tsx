@@ -23,7 +23,7 @@ export default function Login() {
         <div>
           <input
             type="email"
-            placeholder="Email / Username"
+            placeholder="Email"
             className="w-full border border-black p-2"
           />
         </div>
