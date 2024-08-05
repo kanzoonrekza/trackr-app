@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import SearchBar from "./search-bar";
+import SearchBar from "./searchBar";
 
 export default function Header() {
   return (

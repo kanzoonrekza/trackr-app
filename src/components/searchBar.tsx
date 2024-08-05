@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import React from "react";
 import useDebounce from "../hooks/useDebounce";
 import { FetchMyAnimeList } from "../services/external/myAnimeList";
 
 export default function SearchBar() {
-  const [searchCategory, setSearchCategory] = React.useState("anime");
+  const [searchCategory] = React.useState("anime");
   const [searchQuery, setSearchQuery] = React.useState("");
   const debouncedQuery = useDebounce(searchQuery, 800);
 
@@ -19,14 +20,14 @@ export default function SearchBar() {
   });
 
   return (
-    <div className="relative">
+    <div className="group relative">
       <input
-        className="peer border border-black"
+        className="border border-black"
         type="text"
         onChange={e => setSearchQuery(e.target.value)}
         value={searchQuery}
       />
-      <div className="absolute hidden w-full flex-col border bg-white peer-focus-within:flex">
+      <div className="absolute hidden w-full flex-col border bg-white group-focus-within:flex">
         {isLoading && "Loading..."}
         {!isLoading && !data?.data && debouncedQuery.length > 2 && "No results"}
         {!isLoading &&
@@ -34,9 +35,25 @@ export default function SearchBar() {
           debouncedQuery.length < 3 &&
           "Please type more than 2 characters to search"}
         {!isLoading && data?.data?.length > 0 && (
-          <ul className="flex flex-col gap-2">
-            {data?.data.map((item: any) => <li>{item.node.title}</li>)}
-          </ul>
+          <form action="">
+            <ul className="flex flex-col gap-2">
+              {data?.data.map((item: any) => (
+                <li>
+                  <Link
+                    to="/mal/anime/$id"
+                    className="text-blue-500 hover:underline"
+                    params={{ id: item.node.id }}
+                    onClick={() => {
+                      // @ts-ignore
+                      document.activeElement?.blur();
+                    }}
+                  >
+                    {item.node.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </form>
         )}
       </div>
     </div>

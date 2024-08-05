@@ -1,8 +1,8 @@
 import { createLazyFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { FormEvent } from "react";
-import AuthLayout from "../../layout/auth-layout";
+import AuthLayout from "../_authLayout";
 
-export const Route = createLazyFileRoute("/(authentication)/login")({
+export const Route = createLazyFileRoute("/_authLayout/login")({
   component: Login,
 });
 
@@ -14,7 +14,7 @@ export default function Login() {
   };
 
   return (
-    <AuthLayout>
+    <>
       <AuthLayout.Title>Log In</AuthLayout.Title>
       <AuthLayout.SubTitle>
         Continue where you left off and stay on trackr
@@ -44,6 +44,6 @@ export default function Login() {
           Sign Up
         </Link>
       </AuthLayout.Redirect>
-    </AuthLayout>
+    </>
   );
 }
