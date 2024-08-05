@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, createLazyFileRoute } from "@tanstack/react-router";
-import MainLayout from "../layout/main-layout";
 
 export const Route = createLazyFileRoute("/")({
   component: Index,
@@ -16,10 +15,10 @@ function Index() {
   });
 
   return (
-    <MainLayout>
+    <>
       <h3>Welcome Home!</h3>
       <Link to="/dashboard">Dashboard</Link>
       <p>{isLoading ? "Loading..." : data.status}</p>
-    </MainLayout>
+    </>
   );
 }

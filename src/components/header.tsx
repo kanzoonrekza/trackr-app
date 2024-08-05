@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import SearchBar from "./searchBar";
 
 export default function Header() {
   return (
@@ -7,6 +8,7 @@ export default function Header() {
         <Link className="text-xl font-bold" to="/dashboard">
           Logo
         </Link>
+        <SearchBar />
         <Link className="border border-black p-1" to="/">
           Logout
         </Link>

@@ -1,8 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import MainLayout from "../layout/main-layout";
 import { FormEvent } from "react";
 
-export const Route = createLazyFileRoute("/createtrackr")({
+export const Route = createLazyFileRoute("/_mainLayout/trackr/create")({
   component: CreateTrackr,
 });
 
@@ -13,7 +12,7 @@ function CreateTrackr() {
   };
 
   return (
-    <MainLayout>
+    <>
       <div className="mx-auto max-w-screen-xl p-12">
         <h3 className="text-4xl/[36px] font-bold">Create New Trackr</h3>
         <form onSubmit={handleCreate}>
@@ -36,6 +35,6 @@ function CreateTrackr() {
           </div>
         </form>
       </div>
-    </MainLayout>
+    </>
   );
 }

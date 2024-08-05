@@ -1,9 +1,7 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
-import MainLayout from "../layout/main-layout";
-import { Link } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
-export const Route = createLazyFileRoute("/dashboard")({
+export const Route = createLazyFileRoute("/_mainLayout/dashboard")({
   component: Dashboard,
 });
 
@@ -28,13 +26,13 @@ function Dashboard() {
   };
 
   return (
-    <MainLayout>
+    <>
       <div className="mx-auto mt-10 max-w-screen-xl p-12">
         <div className="mb-10 flex justify-between">
           <h3 className="text-4xl font-bold">Trackr List</h3>
           <Link
             className="border border-black px-4 py-2 font-medium"
-            to="/createtrackr"
+            to="/trackr/create"
           >
             New Trackr
           </Link>
@@ -91,7 +89,7 @@ function Dashboard() {
           </div>
         </div>
       )}
-    </MainLayout>
+    </>
   );
 }
 

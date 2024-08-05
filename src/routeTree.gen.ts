@@ -13,53 +13,74 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as MainLayoutImport } from './routes/_mainLayout'
+import { Route as AuthLayoutImport } from './routes/_authLayout'
+import { Route as MainLayoutexternalApiDetailsMalAnimeIdImport } from './routes/_mainLayout/(externalApiDetails)/mal/anime.$id'
 
 // Create Virtual Routes
 
-const DashboardLazyImport = createFileRoute('/dashboard')()
-const CreatetrackrLazyImport = createFileRoute('/createtrackr')()
 const IndexLazyImport = createFileRoute('/')()
-const authenticationSignupLazyImport = createFileRoute(
-  '/(authentication)/signup',
+const MainLayoutDashboardLazyImport = createFileRoute(
+  '/_mainLayout/dashboard',
 )()
-const authenticationLoginLazyImport = createFileRoute(
-  '/(authentication)/login',
+const AuthLayoutSignupLazyImport = createFileRoute('/_authLayout/signup')()
+const AuthLayoutLoginLazyImport = createFileRoute('/_authLayout/login')()
+const MainLayoutTrackrCreateLazyImport = createFileRoute(
+  '/_mainLayout/trackr/create',
 )()
 
 // Create/Update Routes
 
-const DashboardLazyRoute = DashboardLazyImport.update({
-  path: '/dashboard',
+const MainLayoutRoute = MainLayoutImport.update({
+  id: '/_mainLayout',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/dashboard.lazy').then((d) => d.Route))
+} as any)
 
-const CreatetrackrLazyRoute = CreatetrackrLazyImport.update({
-  path: '/createtrackr',
+const AuthLayoutRoute = AuthLayoutImport.update({
+  id: '/_authLayout',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/createtrackr.lazy').then((d) => d.Route))
+} as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const authenticationSignupLazyRoute = authenticationSignupLazyImport
-  .update({
-    path: '/signup',
-    getParentRoute: () => rootRoute,
-  } as any)
-  .lazy(() =>
-    import('./routes/(authentication)/signup.lazy').then((d) => d.Route),
-  )
+const MainLayoutDashboardLazyRoute = MainLayoutDashboardLazyImport.update({
+  path: '/dashboard',
+  getParentRoute: () => MainLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_mainLayout/dashboard.lazy').then((d) => d.Route),
+)
 
-const authenticationLoginLazyRoute = authenticationLoginLazyImport
-  .update({
-    path: '/login',
-    getParentRoute: () => rootRoute,
+const AuthLayoutSignupLazyRoute = AuthLayoutSignupLazyImport.update({
+  path: '/signup',
+  getParentRoute: () => AuthLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_authLayout/signup.lazy').then((d) => d.Route),
+)
+
+const AuthLayoutLoginLazyRoute = AuthLayoutLoginLazyImport.update({
+  path: '/login',
+  getParentRoute: () => AuthLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_authLayout/login.lazy').then((d) => d.Route),
+)
+
+const MainLayoutTrackrCreateLazyRoute = MainLayoutTrackrCreateLazyImport.update(
+  {
+    path: '/trackr/create',
+    getParentRoute: () => MainLayoutRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/_mainLayout/trackr/create.lazy').then((d) => d.Route),
+)
+
+const MainLayoutexternalApiDetailsMalAnimeIdRoute =
+  MainLayoutexternalApiDetailsMalAnimeIdImport.update({
+    path: '/mal/anime/$id',
+    getParentRoute: () => MainLayoutRoute,
   } as any)
-  .lazy(() =>
-    import('./routes/(authentication)/login.lazy').then((d) => d.Route),
-  )
 
 // Populate the FileRoutesByPath interface
 
@@ -72,33 +93,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/createtrackr': {
-      id: '/createtrackr'
-      path: '/createtrackr'
-      fullPath: '/createtrackr'
-      preLoaderRoute: typeof CreatetrackrLazyImport
+    '/_authLayout': {
+      id: '/_authLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardLazyImport
+    '/_mainLayout': {
+      id: '/_mainLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MainLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/(authentication)/login': {
-      id: '/login'
+    '/_authLayout/login': {
+      id: '/_authLayout/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof authenticationLoginLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthLayoutLoginLazyImport
+      parentRoute: typeof AuthLayoutImport
     }
-    '/(authentication)/signup': {
-      id: '/signup'
+    '/_authLayout/signup': {
+      id: '/_authLayout/signup'
       path: '/signup'
       fullPath: '/signup'
-      preLoaderRoute: typeof authenticationSignupLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthLayoutSignupLazyImport
+      parentRoute: typeof AuthLayoutImport
+    }
+    '/_mainLayout/dashboard': {
+      id: '/_mainLayout/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof MainLayoutDashboardLazyImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_mainLayout/trackr/create': {
+      id: '/_mainLayout/trackr/create'
+      path: '/trackr/create'
+      fullPath: '/trackr/create'
+      preLoaderRoute: typeof MainLayoutTrackrCreateLazyImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_mainLayout/(externalApiDetails)/mal/anime/$id': {
+      id: '/_mainLayout/mal/anime/$id'
+      path: '/mal/anime/$id'
+      fullPath: '/mal/anime/$id'
+      preLoaderRoute: typeof MainLayoutexternalApiDetailsMalAnimeIdImport
+      parentRoute: typeof MainLayoutImport
     }
   }
 }
@@ -107,10 +149,15 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  CreatetrackrLazyRoute,
-  DashboardLazyRoute,
-  authenticationLoginLazyRoute,
-  authenticationSignupLazyRoute,
+  AuthLayoutRoute: AuthLayoutRoute.addChildren({
+    AuthLayoutLoginLazyRoute,
+    AuthLayoutSignupLazyRoute,
+  }),
+  MainLayoutRoute: MainLayoutRoute.addChildren({
+    MainLayoutDashboardLazyRoute,
+    MainLayoutTrackrCreateLazyRoute,
+    MainLayoutexternalApiDetailsMalAnimeIdRoute,
+  }),
 })
 
 /* prettier-ignore-end */
@@ -122,26 +169,47 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/createtrackr",
-        "/dashboard",
-        "/login",
-        "/signup"
+        "/_authLayout",
+        "/_mainLayout"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/createtrackr": {
-      "filePath": "createtrackr.lazy.tsx"
+    "/_authLayout": {
+      "filePath": "_authLayout.tsx",
+      "children": [
+        "/_authLayout/login",
+        "/_authLayout/signup"
+      ]
     },
-    "/dashboard": {
-      "filePath": "dashboard.lazy.tsx"
+    "/_mainLayout": {
+      "filePath": "_mainLayout.tsx",
+      "children": [
+        "/_mainLayout/dashboard",
+        "/_mainLayout/trackr/create",
+        "/_mainLayout/mal/anime/$id"
+      ]
     },
-    "/login": {
-      "filePath": "(authentication)/login.lazy.tsx"
+    "/_authLayout/login": {
+      "filePath": "_authLayout/login.lazy.tsx",
+      "parent": "/_authLayout"
     },
-    "/signup": {
-      "filePath": "(authentication)/signup.lazy.tsx"
+    "/_authLayout/signup": {
+      "filePath": "_authLayout/signup.lazy.tsx",
+      "parent": "/_authLayout"
+    },
+    "/_mainLayout/dashboard": {
+      "filePath": "_mainLayout/dashboard.lazy.tsx",
+      "parent": "/_mainLayout"
+    },
+    "/_mainLayout/trackr/create": {
+      "filePath": "_mainLayout/trackr/create.lazy.tsx",
+      "parent": "/_mainLayout"
+    },
+    "/_mainLayout/mal/anime/$id": {
+      "filePath": "_mainLayout/(externalApiDetails)/mal/anime.$id.tsx",
+      "parent": "/_mainLayout"
     }
   }
 }
