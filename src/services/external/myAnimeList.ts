@@ -13,4 +13,16 @@ export const FetchMyAnimeList = {
     );
     return response.json();
   },
+
+  detail: async ({ category, id }: { category: string; id: string }) => {
+    const response = await fetch(
+      `${import.meta.env.VITE_MAL_BASE_URL}/${category}/${id}?fields=alternative_titles,status,mean,start_date,end_date,num_episodes,start_season`,
+      {
+        headers: {
+          "X-MAL-CLIENT-ID": import.meta.env.VITE_MAL_CLIENT_ID,
+        },
+      }
+    );
+    return response.json();
+  },
 };
